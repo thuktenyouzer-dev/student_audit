@@ -1,0 +1,32 @@
+{
+  "name": "student_audit_management_system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+ "scripts": {
+  "start": "node app.js",
+  "dev": "nodemon app.js",
+  "seed": "node scripts/seed.js"
+}
+,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thuktenyouzer-dev/student_audit.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/thuktenyouzer-dev/student_audit/issues"
+  },
+  "homepage": "https://github.com/thuktenyouzer-dev/student_audit#readme",
+  "dependencies": {
+    "dotenv": "^18.0.8",
+    "ejs": "^7.0.1",
+    "express": "^5.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
