@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
- "scripts": {
-  "start": "node app.js",
-  "dev": "nodemon app.js",
-  "seed": "node scripts/seed.js"
-}
-,
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "seed": "node scripts/seed.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/thuktenyouzer-dev/student_audit.git"
@@ -24,7 +23,8 @@
   "dependencies": {
     "dotenv": "^18.0.8",
     "ejs": "^7.0.1",
-    "express": "^5.3.0"
+    "express": "^5.3.0",
+    "pg-promise": "^12.7.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
