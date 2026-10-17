@@ -1,0 +1,17 @@
+<%- include('../partials/header') %>
+ 
+<section class="auth-form">
+  <h1>New Audit</h1>
+  <% if (error) { %><p class="error"><%= error %></p><% } %>
+  <form action="/audits" method="POST">
+    <input type="text" name="title" placeholder="Audit title" required>
+    <input type="date" name="auditDate" required>
+    <select name="auditedUnitId" required>
+      <option value="">— Audited unit —</option>
+      <% units.forEach(u => { %><option value="<%= u.id %>"><%= u.name %> (<%= u.type %>)</option><% }) %>
+    </select>
+    <button type="submit" class="btn">Create Audit</button>
+  </form>
+</section>
+ 
+<%- include('../partials/footer') %>

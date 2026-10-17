@@ -26,5 +26,25 @@ function getAllUsers() {
      ORDER BY u.id`
   );
 }
+function getRepresentativesByUnit(unitId) {
+  return db.any(
+    `SELECT id, name FROM users
+     WHERE role = 'representative' AND audited_unit_id = $1
+     ORDER BY name`,
+    [unitId]
+  );
+}
  
-module.exports = { createUser, findByEmail, verifyPassword, getAllUsers };
+function getById(id) {
+  return db.oneOrNone(
+    'SELECT id, name, email, role, audited_unit_id FROM users WHERE id = $1',
+    [id]
+  );
+}
+
+ 
+module.exports = {
+  createUser, findByEmail, verifyPassword,
+  getAllUsers, getRepresentativesByUnit, getById,
+};
+

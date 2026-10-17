@@ -1,0 +1,22 @@
+<% if (findings.length === 0) { %>
+  <p class="empty">No findings to show.</p>
+<% } else { %>
+  <div class="table-wrap">
+  <table>
+    <tr>
+      <th>#</th><th>Finding</th><th>Unit</th><th>Severity</th><th>Status</th><th>Due</th><th>Responsible</th>
+    </tr>
+    <% findings.forEach(f => { %>
+      <tr>
+        <td><a href="/findings/<%= f.id %>"><%= f.id %></a></td>
+        <td><%= f.description.length > 60 ? f.description.slice(0, 60) + '…' : f.description %></td>
+        <td><%= f.unit_name %></td>
+        <td><span class="badge sev-<%= f.severity.toLowerCase() %>"><%= f.severity %></span></td>
+        <td><span class="badge st-<%= f.status.toLowerCase().replace(' ', '-') %>"><%= f.status %></span></td>
+        <td class="<%= f.overdue ? 'overdue' : '' %>"><%= f.due_date || '—' %><%= f.overdue ? ' (overdue)' : '' %></td>
+        <td><%= f.responsible_name || '—' %></td>
+      </tr>
+    <% }) %>
+  </table>
+  </div>
+<% } %>

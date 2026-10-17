@@ -1,0 +1,23 @@
+<%- include('../partials/header') %>
+ 
+<section class="page-head">
+  <h1>Audits</h1>
+  <% if (user.role === 'auditor') { %><a href="/audits/new" class="btn">+ New Audit</a><% } %>
+</section>
+ 
+<% if (audits.length === 0) { %>
+  <p class="empty">No audits yet.</p>
+<% } else { %>
+<div class="card-grid">
+  <% audits.forEach(a => { %>
+    <a class="card" href="/audits/<%= a.id %>">
+      <h3><%= a.title %></h3>
+      <p><%= a.unit_name %> · <%= a.unit_type %></p>
+      <p class="muted"><%= a.audit_date %> · by <%= a.created_by_name %></p>
+      <span class="badge"><%= a.finding_count %> finding<%= a.finding_count === 1 ? '' : 's' %></span>
+    </a>
+  <% }) %>
+</div>
+<% } %>
+ 
+<%- include('../partials/footer') %>

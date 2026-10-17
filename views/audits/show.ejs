@@ -1,0 +1,34 @@
+<%- include('../partials/header') %>
+ 
+<section class="page-head">
+  <h1><%= audit.title %></h1>
+  <p><%= audit.unit_name %> · <%= audit.unit_type %> · <%= audit.audit_date %></p>
+</section>
+ 
+<h2>Findings in this audit</h2>
+<%- include('../partials/findings-table', { findings }) %>
+ 
+<% if (user.role === 'auditor') { %>
+  <h2>Record a Finding</h2>
+  <% if (error) { %><p class="error"><%= error %></p><% } %>
+  <% if (representatives.length === 0) { %>
+    <p class="empty">This unit has no representatives yet. Ask an admin to create one before recording findings.</p>
+  <% } else { %>
+  <form action="/audits/<%= audit.id %>/findings" method="POST" class="stack-form">
+    <textarea name="description" placeholder="What did you find?" required></textarea>
+    <select name="severity" required>
+      <% severities.forEach(s => { %><option value="<%= s %>"><%= s %></option><% }) %>
+    </select>
+    <textarea name="recommendation" placeholder="Recommendation" required></textarea>
+    <select name="responsibleUserId" required>
+      <option value="">— Responsible representative —</option>
+      <% representatives.forEach(r => { %><option value="<%= r.id %>"><%= r.name %></option><% }) %>
+    </select>
+    <label class="field-label">Due date (optional)</label>
+    <input type="date" name="dueDate">
+    <button type="submit" class="btn">Save Finding</button>
+  </form>
+  <% } %>
+<% } %>
+ 
+<%- include('../partials/footer') %>
