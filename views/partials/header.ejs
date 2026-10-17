@@ -12,8 +12,23 @@
 <header class="site-header">
   <div class="logo">🛡️ Student Audit</div>
   <nav>
-    <a href="/">Home</a>
-    <a href="/about">About</a>
+    <% if (user) { %>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/audits">Audits</a>
+      <a href="/findings">Findings</a>
+      <% if (user.role === 'admin') { %>
+        <a href="/admin/users">Users</a>
+        <a href="/admin/units">Units</a>
+      <% } %>
+      <span class="who"><%= user.name %> · <%= user.role %></span>
+      <form action="/logout" method="POST" class="inline-form">
+        <button type="submit" class="link-btn">Log Out</button>
+      </form>
+    <% } else { %>
+      <a href="/about">About</a>
+      <a href="/login">Log In</a>
+    <% } %>
   </nav>
 </header>
 <main>
+<% if (flash) { %><p class="flash"><%= flash %></p><% } %>

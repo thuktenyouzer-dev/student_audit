@@ -1,0 +1,25 @@
+<%- include('../partials/header') %>
+ 
+<section class="page-head"><h1>Audited Units</h1></section>
+ 
+<div class="table-wrap">
+<table>
+  <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+  <% units.forEach(u => { %>
+    <tr><td><%= u.name %></td><td><span class="badge"><%= u.type %></span></td><td><%= u.description || '—' %></td></tr>
+  <% }) %>
+</table>
+</div>
+ 
+<h2>Add an Audited Unit</h2>
+<% if (error) { %><p class="error"><%= error %></p><% } %>
+<form action="/admin/units" method="POST" class="stack-form">
+  <input type="text" name="name" placeholder="Name" required>
+  <select name="type" required>
+    <% types.forEach(t => { %><option value="<%= t %>"><%= t %></option><% }) %>
+  </select>
+  <textarea name="description" placeholder="Short description (optional)"></textarea>
+  <button type="submit" class="btn">Add Unit</button>
+</form>
+ 
+<%- include('../partials/footer') %>

@@ -1,0 +1,34 @@
+<%- include('../partials/header') %>
+ 
+<section class="page-head"><h1>Manage Users</h1></section>
+ 
+<div class="table-wrap">
+<table>
+  <tr><th>Name</th><th>Email</th><th>Role</th><th>Audited unit</th></tr>
+  <% users.forEach(u => { %>
+    <tr>
+      <td><%= u.name %></td><td><%= u.email %></td>
+      <td><span class="badge"><%= u.role %></span></td>
+      <td><%= u.unit_name || '—' %></td>
+    </tr>
+  <% }) %>
+</table>
+</div>
+ 
+<h2>Create an Account</h2>
+<% if (error) { %><p class="error"><%= error %></p><% } %>
+<form action="/admin/users" method="POST" class="stack-form">
+  <input type="text" name="name" placeholder="Full name" required>
+  <input type="email" name="email" placeholder="Email" required>
+  <input type="password" name="password" placeholder="Temporary password (min 8 characters)" required>
+  <select name="role" required>
+    <% roles.forEach(r => { %><option value="<%= r %>"><%= r %></option><% }) %>
+  </select>
+  <select name="auditedUnitId">
+    <option value="">— Audited unit (representatives only) —</option>
+    <% units.forEach(un => { %><option value="<%= un.id %>"><%= un.name %></option><% }) %>
+  </select>
+  <button type="submit" class="btn">Create Account</button>
+</form>
+ 
+<%- include('../partials/footer') %>

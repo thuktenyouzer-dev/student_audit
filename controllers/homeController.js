@@ -1,5 +1,4 @@
 exports.getHome = (req, res) => {
-    res.render('index', {
-        title: 'Student Audit Management System'
-    });
+  if (req.session.user) return res.redirect('/dashboard');
+  res.render('index', { title: 'Student Audit Management System' });
 };
