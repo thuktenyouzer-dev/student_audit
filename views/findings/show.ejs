@@ -1,0 +1,43 @@
+<%- include('../partials/header') %>
+ 
+<section class="page-head">
+  <h1>Finding #<%= finding.id %></h1>
+  <p><a href="/audits/<%= finding.audit_id %>"><%= finding.audit_title %></a> · <%= finding.unit_name %></p>
+</section>
+ 
+<div class="detail-card">
+  <p>
+    <span class="badge sev-<%= finding.severity.toLowerCase() %>"><%= finding.severity %></span>
+    <span class="badge st-<%= finding.status.toLowerCase().replace(' ', '-') %>"><%= finding.status %></span>
+    <% if (finding.overdue) { %><span class="badge sev-high">Overdue</span><% } %>
+  </p>
+  <h3>Description</h3><p><%= finding.description %></p>
+  <h3>Recommendation</h3><p><%= finding.recommendation %></p>
+  <p class="muted">Responsible: <strong><%= finding.responsible_name || 'Unassigned' %></strong> · Due: <%= finding.due_date || 'not set' %></p>
+</div>
+ 
+<% if (canUpdate) { %>
+  <h2>Update Progress</h2>
+  <form action="/findings/<%= finding.id %>/status" method="POST" class="stack-form">
+    <input type="hidden" name="newStatus" value="<%= nextStatus %>">
+    <textarea name="note" placeholder="Progress note (what was done?)" required></textarea>
+    <button type="submit" class="btn">Move to <%= nextStatus %></button>
+  </form>
+<% } %>
+ 
+<h2>History</h2>
+<% if (history.length === 0) { %>
+  <p class="empty">No updates yet.</p>
+<% } else { %>
+  <ul class="timeline">
+    <% history.forEach(h => { %>
+      <li>
+        <strong><%= h.old_status %> → <%= h.new_status %></strong>
+        <span class="muted"> · <%= h.updated_by_name %> · <%= h.created_at %></span>
+        <p><%= h.note %></p>
+      </li>
+    <% }) %>
+  </ul>
+<% } %>
+ 
+<%- include('../partials/footer') %>

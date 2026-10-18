@@ -33,3 +33,43 @@ exports.filter = ({ auditId, unitId, status } = {}) => {
   const clause = where.length ? 'WHERE ' + where.join(' AND ') : '';
   return db.any(`${SELECT_FINDINGS} ${clause} ORDER BY f.id DESC`, params);
 };
+// The only legal moves in the workflow
+const NEXT_STATUS = {
+  'Open': 'In Progress',
+  'In Progress': 'Resolved',
+};
+exports.NEXT_STATUS = NEXT_STATUS;
+ 
+// Changes the status AND writes the history row together, or neither
+exports.updateStatus = ({ findingId, newStatus, note, userId }) =>
+  db.tx(async (t) => {
+    const current = await t.one(
+      'SELECT status FROM findings WHERE id = $1 FOR UPDATE',
+      [findingId]
+    );
+    if (NEXT_STATUS[current.status] !== newStatus) {
+      throw new Error(`Cannot move a finding from ${current.status} to ${newStatus}.`);
+    }
+    await t.none('UPDATE findings SET status = $1 WHERE id = $2', [newStatus, findingId]);
+    await t.none(
+      `INSERT INTO status_updates (finding_id, old_status, new_status, note, updated_by)
+       VALUES ($1, $2, $3, $4, $5)`,
+      [findingId, current.status, newStatus, note, userId]
+    );
+  });
+
+  // Counts for the dashboard. unitId is optional (representatives only see their unit).
+exports.getStats = (unitId) => {
+  const params = unitId ? [unitId] : [];
+  const scope = unitId ? 'WHERE a.audited_unit_id = $1' : '';
+  return db.one(
+    `SELECT
+       COUNT(*)::int AS total,
+       COUNT(*) FILTER (WHERE f.status = 'Open')::int AS open,
+       COUNT(*) FILTER (WHERE f.status = 'In Progress')::int AS in_progress,
+       COUNT(*) FILTER (WHERE f.status = 'Resolved')::int AS resolved,
+       COUNT(*) FILTER (WHERE f.due_date < CURRENT_DATE AND f.status <> 'Resolved')::int AS overdue
+     FROM findings f JOIN audits a ON a.id = f.audit_id ${scope}`,
+    params
+  );
+};

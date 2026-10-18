@@ -29,6 +29,13 @@
   <button type="submit" class="btn">Filter</button>
   <a href="/findings" class="link-reset">Reset</a>
 </form>
+<% if (user.role !== 'representative') { %>
+    <p>
+        <a href="/findings/export.csv">
+            Export all findings (CSV)
+        </a>
+    </p>
+<% } %>
  
 <%- include('../partials/findings-table', { findings }) %>
  

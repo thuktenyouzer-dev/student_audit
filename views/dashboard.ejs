@@ -2,10 +2,18 @@
  
 <section class="page-head">
   <h1>Dashboard</h1>
-  <p>Hello, <%= user.name %> (<%= user.role %>).</p>
+  <p>Hello, <%= user.name %>.</p>
 </section>
  
-<p>Counts and recent findings will appear here after Lab 7.</p>
+<div class="stat-grid">
+  <div class="stat"><span class="num"><%= stats.total %></span><span class="label">Total findings</span></div>
+  <div class="stat"><span class="num"><%= stats.open %></span><span class="label">Open</span></div>
+  <div class="stat"><span class="num"><%= stats.in_progress %></span><span class="label">In Progress</span></div>
+  <div class="stat"><span class="num"><%= stats.resolved %></span><span class="label">Resolved</span></div>
+  <div class="stat stat-alert"><span class="num"><%= stats.overdue %></span><span class="label">Overdue</span></div>
+</div>
+ 
+<h2>Latest findings</h2>
+<%- include('partials/findings-table', { findings: recent }) %>
  
 <%- include('partials/footer') %>
-
