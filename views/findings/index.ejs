@@ -1,0 +1,35 @@
+<%- include('../partials/header') %>
+ 
+<section class="page-head"><h1>Findings</h1></section>
+ 
+<form method="GET" action="/findings" class="filter-bar">
+  <select name="audit">
+    <option value="">All audits</option>
+    <% audits.forEach(a => { %>
+      <option value="<%= a.id %>" <%= String(a.id) === filters.audit ? 'selected' : '' %>><%= a.title %></option>
+    <% }) %>
+  </select>
+ 
+  <% if (units.length) { %>
+  <select name="unit">
+    <option value="">All units</option>
+    <% units.forEach(u => { %>
+      <option value="<%= u.id %>" <%= String(u.id) === filters.unit ? 'selected' : '' %>><%= u.name %></option>
+    <% }) %>
+  </select>
+  <% } %>
+ 
+  <select name="status">
+    <option value="">All statuses</option>
+    <% statuses.forEach(s => { %>
+      <option value="<%= s %>" <%= s === filters.status ? 'selected' : '' %>><%= s %></option>
+    <% }) %>
+  </select>
+ 
+  <button type="submit" class="btn">Filter</button>
+  <a href="/findings" class="link-reset">Reset</a>
+</form>
+ 
+<%- include('../partials/findings-table', { findings }) %>
+ 
+<%- include('../partials/footer') %>

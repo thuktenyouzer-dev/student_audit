@@ -34,6 +34,7 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/index'));
 app.use('/admin', require('./routes/admin'));
 app.use('/audits', require('./routes/audits'));
+app.use('/findings', require('./routes/findings'));
  
 // 404 and error handling
 app.use((req, res) => {

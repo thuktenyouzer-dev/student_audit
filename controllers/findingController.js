@@ -1,8 +1,31 @@
 const Audit = require('../models/Audit');
+const AuditedUnit = require('../models/AuditedUnit');
 const Finding = require('../models/Finding');
 const User = require('../models/User');
  
 const SEVERITIES = ['High', 'Medium', 'Low'];
+const STATUSES = ['Open', 'In Progress', 'Resolved'];
+
+exports.listFindings = async (req, res) => {
+  const { role, auditedUnitId } = req.session.user;
+  const { audit, unit, status } = req.query;
+ 
+  const findings = await Finding.filter({
+    auditId: audit || null,
+    // A representative's unit filter is forced, whatever the URL says
+    unitId: role === 'representative' ? auditedUnitId : (unit || null),
+    status: STATUSES.includes(status) ? status : null,
+  });
+ 
+  const audits = await Audit.getAll(role === 'representative' ? auditedUnitId : null);
+  const units = role === 'representative' ? [] : await AuditedUnit.getAll();
+ 
+  res.render('findings/index', {
+    title: 'Findings', findings, audits, units, statuses: STATUSES,
+    filters: { audit: audit || '', unit: unit || '', status: status || '' },
+  });
+};
+
  
 exports.createFinding = async (req, res) => {
   const auditId = req.params.auditId;
