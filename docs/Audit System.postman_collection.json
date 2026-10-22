@@ -1,0 +1,261 @@
+{
+  "info": {
+    "_postman_id": "1da868a4-ae86-4008-99e3-21c9b9aebb5e",
+    "name": "Audit System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "59059653",
+    "_collection_link": "https://go.postman.co/collection/59059653-1da868a4-ae86-4008-99e3-21c9b9aebb5e?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "email",
+              "value": "auditor@audit.test"
+            },
+            {
+              "key": "password",
+              "value": "Auditor@12345"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:3000/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "dashboard",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/dashboard",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "dashboard"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "admin user",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/admin/users",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "admin",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "create admin user",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "name",
+              "value": "Postman Test Auditor"
+            },
+            {
+              "key": "email",
+              "value": "postman.auditor.test@audit.test"
+            },
+            {
+              "key": "password",
+              "value": "PostmanTest123"
+            },
+            {
+              "key": "role",
+              "value": "auditor"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:3000/admin/users",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "admin",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "new audit",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/audits/new",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "audits",
+            "new"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Finding",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "description",
+              "value": "Equipment inventory records are incomplete"
+            },
+            {
+              "key": "severity",
+              "value": "High"
+            },
+            {
+              "key": "recommendation",
+              "value": "Update and verify the equipment register"
+            },
+            {
+              "key": "responsibleUserId",
+              "value": "The representative's actual database ID"
+            },
+            {
+              "key": "dueDate",
+              "value": "2026-10-25"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:3000/audits/1/findings",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "audits",
+            "1",
+            "findings"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Filter Findings",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": ""
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Finding Details",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/findings/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "findings",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Status",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": ""
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Export Csv",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": ""
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Log Out",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/logout",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "logout"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
